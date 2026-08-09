@@ -1,0 +1,52 @@
+{
+	"name": "pictum",
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"version": "0.0.0",
+	"packageManager": "pnpm@11.11.0",
+	"description": "Framework-independent Pictum asset helpers for JavaScript.",
+	"author": "Pictum",
+	"license": "MIT",
+	"homepage": "https://github.com/usepictum/pictum-js#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/usepictum/pictum-js.git"
+	},
+	"bugs": {
+		"url": "https://github.com/usepictum/pictum-js/issues"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"sideEffects": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"check": "biome check .",
+		"check:fix": "biome check --write .",
+		"dev": "tsdown --watch",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"play": "pnpm build && pnpm --filter @pictum/playground dev",
+		"test": "vitest --run",
+		"typecheck": "tsc --noEmit",
+		"prepublishOnly": "pnpm build"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.7",
+		"@tsconfig/strictest": "^2.0.8",
+		"git-cliff": "2.13.1",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.10"
+	}
+}

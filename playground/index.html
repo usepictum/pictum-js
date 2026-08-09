@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="A vanilla TypeScript playground for Pictum assets."
+		/>
+		<title>Pictum JavaScript Playground</title>
+	</head>
+	<body>
+		<main>
+			<header class="masthead">
+				<p class="kicker">pictum / vanilla TypeScript</p>
+				<h1>Assets, without the framework.</h1>
+				<p class="lede">
+					URL helpers and inline SVG, rendered directly in the browser.
+				</p>
+			</header>
+
+			<section class="asset-grid" aria-label="Pictum asset examples">
+				<article class="asset-card icon-card">
+					<div class="card-header">
+						<span>01 / Icon</span>
+						<code>icon().svg()</code>
+					</div>
+					<div
+						id="icon-preview"
+						class="icon-preview"
+						role="img"
+						aria-label="Sparkles icon"
+					>
+						<span>Loading SVG</span>
+					</div>
+					<p id="icon-status" class="status" aria-live="polite">Fetching SVG</p>
+				</article>
+
+				<article class="asset-card avatar-card">
+					<div class="card-header">
+						<span>02 / Avatar</span>
+						<code>avatar().url</code>
+					</div>
+					<img id="avatar-preview" alt="Generated portrait" />
+					<code id="avatar-url" class="asset-url"></code>
+				</article>
+
+				<article class="asset-card qr-card">
+					<div class="card-header">
+						<span>03 / QR code</span>
+						<code>qrCode().url</code>
+					</div>
+					<img id="qr-preview" alt="QR code linking to Pictum documentation" />
+					<code id="qr-url" class="asset-url"></code>
+				</article>
+
+				<article class="asset-card placeholder-card">
+					<div class="card-header">
+						<span>04 / Placeholder</span>
+						<code>placeholder().url</code>
+					</div>
+					<img id="placeholder-preview" alt="Pictum placeholder" />
+					<code id="placeholder-url" class="asset-url"></code>
+				</article>
+			</section>
+		</main>
+		<script type="module" src="/src/main.ts"></script>
+	</body>
+</html>
