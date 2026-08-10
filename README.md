@@ -4,7 +4,7 @@
 [![monthly downloads](https://npmx.dev/api/registry/badge/downloads/pictum?color=fed7aa&labelColor=404040)](https://npmx.dev/package/pictum)
 [![license](https://npmx.dev/api/registry/badge/license/pictum?color=bbf7d0&labelColor=404040)](https://npmx.dev/package/pictum)
 
-Framework-agnostic [Pictum](https://pictum.dev) helpers for JavaScript and TypeScript
+[Pictum](https://pictum.dev) asset helpers for JavaScript and TypeScript
 
 ## Installation
 
