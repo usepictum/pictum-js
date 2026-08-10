@@ -2,7 +2,7 @@ import { assertOneOf, createAsset, normalizeBaseUrl } from "../../internal";
 import type { PictumAsset } from "../../types";
 import type { QrCodeFormat, QrCodeOptions } from "./types";
 
-const QR_CODE_FORMATS: readonly QrCodeFormat[] = ["svg", "png", "webp"];
+const QR_CODE_FORMATS: readonly QrCodeFormat[] = ["svg", "jpg", "png", "webp"];
 
 export function qrCode(
 	value: string,

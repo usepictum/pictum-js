@@ -36,6 +36,9 @@ describe("helpers", () => {
 		expect(qrCode("é").url).toBe(
 			"https://pictum.dev/api/v1/qr-codes.svg?data=w6k%3D",
 		);
+		expect(qrCode("é", { format: "jpg" }).url).toBe(
+			"https://pictum.dev/api/v1/qr-codes.jpg?data=w6k%3D",
+		);
 		expect(qrCode("é", { quietZone: false }).url).toBe(
 			"https://pictum.dev/api/v1/qr-codes.svg?data=w6k%3D&quiet_zone=0",
 		);
@@ -101,6 +104,9 @@ describe("helpers", () => {
 	test("rejects malformed inputs and incompatible options", () => {
 		expect(() => icon("React")).toThrow(/collection:name/);
 		expect(() => qrCode("")).toThrow(/1-512/);
+		expect(() =>
+			qrCode("hello", { format: "jpeg" } as unknown as QrCodeOptions),
+		).toThrow(/svg, jpg, png, webp/);
 		expect(() =>
 			qrCode("hello", { quietZone: "no" } as unknown as QrCodeOptions),
 		).toThrow(/must be a boolean/);

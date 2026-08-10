@@ -25,6 +25,7 @@ const imageSources = {
 		format: "jpg",
 	}).url,
 	"qr-svg": qrCode("https://pictum.dev", { format: "svg" }).url,
+	"qr-jpg": qrCode("https://pictum.dev", { format: "jpg" }).url,
 	"qr-png": qrCode("https://pictum.dev", { format: "png" }).url,
 	"qr-webp": qrCode("https://pictum.dev", { format: "webp" }).url,
 	"qr-no-quiet-zone": qrCode("https://pictum.dev", { quietZone: false }).url,
