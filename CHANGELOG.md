@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.2 - 2026-08-10
+
+
+### Features
+
+* add support for jpg QR codes by [@nhedger](https://github.com/nhedger) ([90481a2](https://github.com/usepictum/pictum-js/commit/90481a238506280ed95bd3c86bea5dc3f97b7f14))
+
+
+
+### Contributors
+* [@nhedger](https://github.com/nhedger)
+
+**Comparison**: https://github.com/usepictum/pictum-js/compare/v0.1.1...v0.1.2
+
 ## v0.1.1 - 2026-08-10
 
 
