@@ -1,4 +1,8 @@
-import type { AvatarOptions, PlaceholderOptions, QrCodeFormat } from "./assets";
+import type {
+	AvatarOptions,
+	PlaceholderOptions,
+	QrCodeOptions,
+} from "./assets";
 import type { PictumOptions } from "./types";
 
 type DistributiveOmit<T, Key extends PropertyKey> = T extends unknown
@@ -22,8 +26,7 @@ export type PlaceholderAssetProps = DistributiveOmit<
 	options?: PictumOptions;
 };
 
-export interface QrCodeAssetProps {
+export type QrCodeAssetProps = Omit<QrCodeOptions, "baseUrl"> & {
 	value: string;
-	format?: QrCodeFormat;
 	options?: PictumOptions;
-}
+};

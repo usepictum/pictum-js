@@ -20,6 +20,12 @@ export function qrCode(
 	const data = new URLSearchParams({
 		data: btoa(String.fromCharCode(...bytes)),
 	});
+	if (options.quietZone !== undefined) {
+		if (typeof options.quietZone !== "boolean") {
+			throw new TypeError("QR code quietZone must be a boolean.");
+		}
+		data.set("quiet_zone", options.quietZone ? "1" : "0");
+	}
 	const path = `${baseUrl}/qr-codes`;
 	return createAsset(`${path}.${format}?${data}`, `${path}.svg?${data}`);
 }

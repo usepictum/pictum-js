@@ -6,6 +6,7 @@ import {
 	icon,
 	type PlaceholderOptions,
 	placeholder,
+	type QrCodeOptions,
 	qrCode,
 } from "../src";
 
@@ -34,6 +35,9 @@ describe("helpers", () => {
 	test("encodes QR code values as standard UTF-8 Base64", () => {
 		expect(qrCode("é").url).toBe(
 			"https://pictum.dev/api/v1/qr-codes.svg?data=w6k%3D",
+		);
+		expect(qrCode("é", { quietZone: false }).url).toBe(
+			"https://pictum.dev/api/v1/qr-codes.svg?data=w6k%3D&quiet_zone=0",
 		);
 	});
 
@@ -97,6 +101,9 @@ describe("helpers", () => {
 	test("rejects malformed inputs and incompatible options", () => {
 		expect(() => icon("React")).toThrow(/collection:name/);
 		expect(() => qrCode("")).toThrow(/1-512/);
+		expect(() =>
+			qrCode("hello", { quietZone: "no" } as unknown as QrCodeOptions),
+		).toThrow(/must be a boolean/);
 		expect(() =>
 			placeholder({ size: 320, density: 2 } as unknown as PlaceholderOptions),
 		).toThrow(/not available for SVG/);
