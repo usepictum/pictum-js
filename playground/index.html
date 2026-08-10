@@ -5,63 +5,193 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta
 			name="description"
-			content="A vanilla TypeScript playground for Pictum assets."
+			content="A JavaScript playground for Pictum asset helpers."
 		/>
 		<title>Pictum JavaScript Playground</title>
 	</head>
 	<body>
 		<main>
-			<header class="masthead">
-				<p class="kicker">pictum / vanilla TypeScript</p>
-				<h1>Assets, without the framework.</h1>
-				<p class="lede">
-					URL helpers and inline SVG, rendered directly in the browser.
-				</p>
+			<header>
+				<h1>Pictum JavaScript</h1>
+				<p>Asset helper playground</p>
 			</header>
 
-			<section class="asset-grid" aria-label="Pictum asset examples">
-				<article class="asset-card icon-card">
-					<div class="card-header">
-						<span>01 / Icon</span>
-						<code>icon().svg()</code>
-					</div>
-					<div
-						id="icon-preview"
-						class="icon-preview"
-						role="img"
-						aria-label="Sparkles icon"
-					>
-						<span>Loading SVG</span>
-					</div>
-					<p id="icon-status" class="status" aria-live="polite">Fetching SVG</p>
-				</article>
+			<section aria-labelledby="avatars-heading">
+				<div class="section-heading">
+					<h2 id="avatars-heading">Avatars</h2>
+					<span>5 variants</span>
+				</div>
+				<div class="samples avatars">
+					<figure>
+						<div class="preview">
+							<img id="avatar-identicon" alt="Identicon avatar" />
+						</div>
+						<figcaption><strong>Identicon</strong><code>svg</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img id="avatar-gradient" alt="Gradient avatar" />
+						</div>
+						<figcaption><strong>Gradient</strong><code>jpg</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img id="avatar-initials" alt="Initials avatar" />
+						</div>
+						<figcaption><strong>Initials</strong><code>png</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img
+								id="avatar-realistic-female"
+								alt="Realistic female avatar"
+							/>
+						</div>
+						<figcaption>
+							<strong>Realistic</strong><code>female · webp</code>
+						</figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img id="avatar-realistic-male" alt="Realistic male avatar" />
+						</div>
+						<figcaption>
+							<strong>Realistic</strong><code>male · jpg</code>
+						</figcaption>
+					</figure>
+				</div>
+			</section>
 
-				<article class="asset-card avatar-card">
-					<div class="card-header">
-						<span>02 / Avatar</span>
-						<code>avatar().url</code>
-					</div>
-					<img id="avatar-preview" alt="Generated portrait" />
-					<code id="avatar-url" class="asset-url"></code>
-				</article>
+			<section aria-labelledby="icons-heading">
+				<div class="section-heading">
+					<h2 id="icons-heading">Icons</h2>
+					<span>Inline SVG</span>
+				</div>
+				<div class="samples icons">
+					<figure>
+						<div id="icon-image" class="preview" data-label="Image"></div>
+						<figcaption><strong>Image</strong><code>lucide:image</code></figcaption>
+					</figure>
+					<figure>
+						<div
+							id="icon-qr-code"
+							class="preview"
+							data-label="Scan QR code"
+						></div>
+						<figcaption>
+							<strong>QR code</strong><code>lucide:scan-qr-code</code>
+						</figcaption>
+					</figure>
+					<figure>
+						<div id="icon-user" class="preview" data-label="User"></div>
+						<figcaption>
+							<strong>User</strong><code>lucide:user-round</code>
+						</figcaption>
+					</figure>
+					<figure>
+						<div
+							id="icon-sparkles"
+							class="preview"
+							data-label="Sparkles"
+						></div>
+						<figcaption>
+							<strong>Sparkles</strong><code>lucide:sparkles</code>
+						</figcaption>
+					</figure>
+				</div>
+			</section>
 
-				<article class="asset-card qr-card">
-					<div class="card-header">
-						<span>03 / QR code</span>
-						<code>qrCode().url</code>
-					</div>
-					<img id="qr-preview" alt="QR code linking to Pictum documentation" />
-					<code id="qr-url" class="asset-url"></code>
-				</article>
+			<section aria-labelledby="qr-codes-heading">
+				<div class="section-heading">
+					<h2 id="qr-codes-heading">QR codes</h2>
+					<span>4 examples</span>
+				</div>
+				<div class="samples qr-codes">
+					<figure>
+						<div class="preview">
+							<img id="qr-svg" alt="SVG QR code" />
+						</div>
+						<figcaption><strong>SVG</strong><code>svg</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img id="qr-png" alt="PNG QR code" />
+						</div>
+						<figcaption><strong>PNG</strong><code>png</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img id="qr-webp" alt="WebP QR code" />
+						</div>
+						<figcaption><strong>WebP</strong><code>webp</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img
+								id="qr-no-quiet-zone"
+								alt="QR code without a quiet zone"
+							/>
+						</div>
+						<figcaption>
+							<strong>No quiet zone</strong><code>quiet_zone=0</code>
+						</figcaption>
+					</figure>
+				</div>
+			</section>
 
-				<article class="asset-card placeholder-card">
-					<div class="card-header">
-						<span>04 / Placeholder</span>
-						<code>placeholder().url</code>
-					</div>
-					<img id="placeholder-preview" alt="Pictum placeholder" />
-					<code id="placeholder-url" class="asset-url"></code>
-				</article>
+			<section aria-labelledby="placeholders-heading">
+				<div class="section-heading">
+					<h2 id="placeholders-heading">Placeholders</h2>
+					<span>4 formats</span>
+				</div>
+				<div class="samples placeholders">
+					<figure>
+						<div class="preview">
+							<img
+								id="placeholder-svg"
+								width="144"
+								height="144"
+								alt="Square SVG placeholder"
+							/>
+						</div>
+						<figcaption><strong>SVG</strong><code>144 × 144</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img
+								id="placeholder-jpg"
+								width="240"
+								height="144"
+								alt="JPG placeholder"
+							/>
+						</div>
+						<figcaption><strong>JPG</strong><code>1×</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img
+								id="placeholder-png"
+								width="240"
+								height="144"
+								alt="Retina PNG placeholder"
+							/>
+						</div>
+						<figcaption><strong>PNG</strong><code>2×</code></figcaption>
+					</figure>
+					<figure>
+						<div class="preview">
+							<img
+								id="placeholder-webp"
+								width="240"
+								height="144"
+								alt="Custom WebP placeholder"
+							/>
+						</div>
+						<figcaption>
+							<strong>WebP</strong><code>3× · custom</code>
+						</figcaption>
+					</figure>
+				</div>
 			</section>
 		</main>
 		<script type="module" src="/src/main.ts"></script>

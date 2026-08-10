@@ -1,49 +1,84 @@
 import { avatar, icon, placeholder, qrCode } from "pictum";
 import "./style.css";
 
-const avatarAsset = avatar("ada-lovelace", {
-	variant: "realistic",
-	gender: "female",
-});
-const qrAsset = qrCode("https://docs.pictum.dev", { format: "svg" });
-const placeholderAsset = placeholder({
-	width: 720,
-	height: 420,
-	format: "webp",
-	density: 2,
-	background: "#e9ff70",
-	color: "#111111",
-	text: "Pictum",
-});
+const imageSources = {
+	"avatar-identicon": avatar("ada-lovelace", {
+		variant: "identicon",
+		format: "svg",
+	}).url,
+	"avatar-gradient": avatar("grace-hopper", {
+		variant: "gradient",
+		format: "jpg",
+	}).url,
+	"avatar-initials": avatar("margaret-hamilton", {
+		variant: "initials",
+		format: "png",
+	}).url,
+	"avatar-realistic-female": avatar("customer-female", {
+		variant: "realistic",
+		gender: "female",
+		format: "webp",
+	}).url,
+	"avatar-realistic-male": avatar("customer-male", {
+		variant: "realistic",
+		gender: "male",
+		format: "jpg",
+	}).url,
+	"qr-svg": qrCode("https://pictum.dev", { format: "svg" }).url,
+	"qr-png": qrCode("https://pictum.dev", { format: "png" }).url,
+	"qr-webp": qrCode("https://pictum.dev", { format: "webp" }).url,
+	"qr-no-quiet-zone": qrCode("https://pictum.dev", { quietZone: false }).url,
+	"placeholder-svg": placeholder({ size: 144, format: "svg", text: "SVG" }).url,
+	"placeholder-jpg": placeholder({
+		width: 240,
+		height: 144,
+		format: "jpg",
+		text: "JPG",
+	}).url,
+	"placeholder-png": placeholder({
+		width: 240,
+		height: 144,
+		format: "png",
+		density: 2,
+		text: "PNG",
+	}).url,
+	"placeholder-webp": placeholder({
+		width: 240,
+		height: 144,
+		format: "webp",
+		density: 3,
+		background: "#202020",
+		color: "#ffffff",
+		text: "WebP",
+	}).url,
+};
 
-setImage("#avatar-preview", "#avatar-url", avatarAsset.url);
-setImage("#qr-preview", "#qr-url", qrAsset.url);
-setImage("#placeholder-preview", "#placeholder-url", placeholderAsset.url);
-void renderIcon();
-
-async function renderIcon(): Promise<void> {
-	const preview = query<HTMLElement>("#icon-preview");
-	const status = query<HTMLElement>("#icon-status");
-
-	try {
-		preview.innerHTML = await icon("lucide:sparkles").svg();
-		preview.querySelector("svg")?.setAttribute("aria-hidden", "true");
-		status.textContent = "Inline SVG ready";
-		status.setAttribute("data-state", "ready");
-	} catch {
-		preview.textContent = "SVG unavailable";
-		status.textContent = "Check that the Pictum API is running";
-		status.setAttribute("data-state", "error");
-	}
+for (const [id, source] of Object.entries(imageSources)) {
+	query<HTMLImageElement>(`#${id}`).src = source;
 }
 
-function setImage(
-	imageSelector: string,
-	urlSelector: string,
-	url: string,
-): void {
-	query<HTMLImageElement>(imageSelector).src = url;
-	query<HTMLElement>(urlSelector).textContent = url;
+const icons = {
+	"icon-image": "lucide:image",
+	"icon-qr-code": "lucide:scan-qr-code",
+	"icon-user": "lucide:user-round",
+	"icon-sparkles": "lucide:sparkles",
+};
+
+for (const [id, name] of Object.entries(icons)) {
+	void renderIcon(`#${id}`, name);
+}
+
+async function renderIcon(selector: string, name: string): Promise<void> {
+	const preview = query<HTMLElement>(selector);
+
+	try {
+		preview.innerHTML = await icon(name).svg();
+		const svg = preview.querySelector("svg");
+		svg?.setAttribute("role", "img");
+		svg?.setAttribute("aria-label", preview.getAttribute("data-label") ?? name);
+	} catch {
+		preview.textContent = "Unavailable";
+	}
 }
 
 function query<Element extends HTMLElement>(selector: string): Element {
