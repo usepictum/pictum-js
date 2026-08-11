@@ -1,21 +1,33 @@
 import type { PictumOptions } from "../../types";
 
-export type GeneratedAvatarVariant = "identicon" | "gradient" | "initials";
-export type AvatarVariant = GeneratedAvatarVariant | "realistic";
-export type AvatarGender = "male" | "female";
-export type AvatarFormat = "svg" | "jpg" | "png" | "webp";
+export type GeneratedAvatarVariant = "identicon" | "gradient" | "monogram";
+export type AvatarVariant = GeneratedAvatarVariant | "portrait";
+export type AvatarGender = "any" | "male" | "female";
+export type AvatarFormat = "jpg" | "png" | "webp" | "svg";
 export type AvatarRasterFormat = Exclude<AvatarFormat, "svg">;
 
-export type GeneratedAvatarOptions = PictumOptions & {
+type GeneratedAvatarBaseOptions = PictumOptions & {
 	variant?: GeneratedAvatarVariant;
 	gender?: never;
-	format?: AvatarFormat;
 };
 
-export type RealisticAvatarOptions = PictumOptions & {
-	variant: "realistic";
+export type GeneratedAvatarOptions = GeneratedAvatarBaseOptions &
+	(
+		| {
+				format?: "svg";
+				size?: never;
+		  }
+		| {
+				format: AvatarRasterFormat;
+				size?: number;
+		  }
+	);
+
+export type PortraitAvatarOptions = PictumOptions & {
+	variant: "portrait";
 	gender?: AvatarGender;
 	format?: AvatarRasterFormat;
+	size?: number;
 };
 
-export type AvatarOptions = GeneratedAvatarOptions | RealisticAvatarOptions;
+export type AvatarOptions = GeneratedAvatarOptions | PortraitAvatarOptions;

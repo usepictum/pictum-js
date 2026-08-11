@@ -3,6 +3,7 @@ import type { PictumAsset } from "../../types";
 import type { QrCodeFormat, QrCodeOptions } from "./types";
 
 const QR_CODE_FORMATS: readonly QrCodeFormat[] = ["svg", "jpg", "png", "webp"];
+const QR_CODE_COLOR_PATTERN = /^#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?$/;
 
 export function qrCode(
 	value: string,
@@ -26,6 +27,25 @@ export function qrCode(
 		}
 		data.set("quiet_zone", options.quietZone ? "1" : "0");
 	}
-	const path = `${baseUrl}/qr-codes`;
+	if (options.foreground !== undefined) {
+		assertQrCodeColor(options.foreground, "foreground");
+		data.set("foreground", options.foreground);
+	}
+	if (options.background !== undefined) {
+		assertQrCodeColor(options.background, "background");
+		data.set("background", options.background);
+	}
+	const path = `${baseUrl}/qrcode`;
 	return createAsset(`${path}.${format}?${data}`, `${path}.svg?${data}`);
+}
+
+function assertQrCodeColor(
+	value: unknown,
+	field: "background" | "foreground",
+): asserts value is string {
+	if (typeof value !== "string" || !QR_CODE_COLOR_PATTERN.test(value)) {
+		throw new TypeError(
+			`QR code ${field} must use #rrggbb or #rrggbbaa syntax.`,
+		);
+	}
 }

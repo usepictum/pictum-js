@@ -1,4 +1,9 @@
-import { assertOneOf, createAsset, normalizeBaseUrl } from "../../internal";
+import {
+	assertIntegerInRange,
+	assertOneOf,
+	createAsset,
+	normalizeBaseUrl,
+} from "../../internal";
 import type { PictumAsset } from "../../types";
 import type {
 	AvatarFormat,
@@ -12,15 +17,17 @@ const AVATAR_SEED_PATTERN =
 const AVATAR_VARIANTS: readonly AvatarVariant[] = [
 	"identicon",
 	"gradient",
-	"initials",
-	"realistic",
+	"monogram",
+	"portrait",
 ];
-const AVATAR_FORMATS: readonly AvatarFormat[] = ["svg", "jpg", "png", "webp"];
-const AVATAR_GENDERS: readonly AvatarGender[] = ["male", "female"];
+const AVATAR_FORMATS: readonly AvatarFormat[] = ["jpg", "png", "webp", "svg"];
+const AVATAR_GENDERS: readonly AvatarGender[] = ["any", "male", "female"];
+const MIN_AVATAR_SIZE = 16;
+const MAX_AVATAR_SIZE = 1024;
 
 export function avatar(seed: string, options: AvatarOptions = {}): PictumAsset {
-	const variant = options.variant ?? "initials";
-	const format = options.format ?? (variant === "realistic" ? "webp" : "svg");
+	const variant = options.variant ?? "monogram";
+	const format = options.format ?? (variant === "portrait" ? "webp" : "svg");
 
 	if (!AVATAR_SEED_PATTERN.test(seed)) {
 		throw new TypeError(
@@ -30,26 +37,55 @@ export function avatar(seed: string, options: AvatarOptions = {}): PictumAsset {
 
 	assertOneOf(variant, AVATAR_VARIANTS, "Avatar variant");
 	assertOneOf(format, AVATAR_FORMATS, "Avatar format");
-	if (variant !== "realistic" && options.gender !== undefined) {
+	if (variant !== "portrait" && options.gender !== undefined) {
 		throw new TypeError(
-			"Avatar gender is only available for realistic avatars.",
+			"Avatar gender is only available for the portrait variant.",
 		);
 	}
-	if (variant === "realistic" && format === "svg") {
-		throw new TypeError("Realistic avatars do not support SVG format.");
+	if (variant === "portrait" && format === "svg") {
+		throw new TypeError(
+			"The portrait avatar variant does not support SVG format.",
+		);
 	}
 	if (options.gender !== undefined) {
 		assertOneOf(options.gender, AVATAR_GENDERS, "Avatar gender");
 	}
-
-	const baseUrl = normalizeBaseUrl(options.baseUrl);
-	const encodedSeed = encodeURIComponent(seed);
-	if (variant === "realistic") {
-		const genderPath = options.gender === undefined ? "" : `/${options.gender}`;
-		const path = `${baseUrl}/avatars/realistic${genderPath}/${encodedSeed}`;
-		return createAsset(`${path}.${format}`, null);
+	if (format === "svg" && options.size !== undefined) {
+		throw new TypeError("Avatar size is only available for raster formats.");
+	}
+	if (options.size !== undefined) {
+		assertIntegerInRange(
+			options.size,
+			MIN_AVATAR_SIZE,
+			MAX_AVATAR_SIZE,
+			"Avatar size",
+		);
 	}
 
-	const path = `${baseUrl}/avatars/${variant}/${encodedSeed}`;
-	return createAsset(`${path}.${format}`, `${path}.svg`);
+	const baseUrl = normalizeBaseUrl(options.baseUrl);
+	const query = new URLSearchParams({ seed });
+	if (variant !== "monogram") {
+		query.set("variant", variant);
+	}
+	if (
+		variant === "portrait" &&
+		options.gender !== undefined &&
+		options.gender !== "any"
+	) {
+		query.set("gender", options.gender);
+	}
+
+	const path = `${baseUrl}/avatar`;
+	if (variant === "portrait") {
+		if (options.size !== undefined) {
+			query.set("size", String(options.size));
+		}
+		return createAsset(`${path}.${format}?${query}`, null);
+	}
+
+	const svgUrl = `${path}.svg?${query}`;
+	if (options.size !== undefined) {
+		query.set("size", String(options.size));
+	}
+	return createAsset(`${path}.${format}?${query}`, svgUrl);
 }

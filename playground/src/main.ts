@@ -10,17 +10,22 @@ const imageSources = {
 		variant: "gradient",
 		format: "jpg",
 	}).url,
-	"avatar-initials": avatar("margaret-hamilton", {
-		variant: "initials",
+	"avatar-monogram": avatar("margaret-hamilton", {
+		variant: "monogram",
 		format: "png",
 	}).url,
-	"avatar-realistic-female": avatar("customer-female", {
-		variant: "realistic",
+	"avatar-portrait-any": avatar("customer-any", {
+		variant: "portrait",
+		gender: "any",
+		format: "webp",
+	}).url,
+	"avatar-portrait-female": avatar("customer-female", {
+		variant: "portrait",
 		gender: "female",
 		format: "webp",
 	}).url,
-	"avatar-realistic-male": avatar("customer-male", {
-		variant: "realistic",
+	"avatar-portrait-male": avatar("customer-male", {
+		variant: "portrait",
 		gender: "male",
 		format: "jpg",
 	}).url,

@@ -11,7 +11,7 @@ import type {
 	PlaceholderOptions,
 } from "./types";
 
-const COLOR_PATTERN = /^#[0-9A-Fa-f]{6}$/;
+const COLOR_PATTERN = /^#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?$/;
 const MAX_PLACEHOLDER_PIXELS = 4_194_304;
 const PLACEHOLDER_FORMATS: readonly PlaceholderFormat[] = [
 	"svg",
@@ -49,20 +49,17 @@ export function placeholder(options: PlaceholderOptions): PictumAsset {
 	}
 
 	const baseUrl = normalizeBaseUrl(options.baseUrl);
-	const density = options.density === undefined ? "" : `@${options.density}x`;
-	const query = buildPlaceholderQuery(options);
-	const path = `${baseUrl}/placeholders/${dimensions.path}`;
+	const path = `${baseUrl}/placeholder`;
 
 	return createAsset(
-		`${path}${density}.${format}${query}`,
-		`${path}.svg${query}`,
+		`${path}.${format}${buildPlaceholderQuery(options, dimensions, true)}`,
+		`${path}.svg${buildPlaceholderQuery(options, dimensions, false)}`,
 	);
 }
 
 function resolvePlaceholderDimensions(options: PlaceholderOptions): {
 	width: number;
 	height: number;
-	path: string;
 } {
 	if (options.size !== undefined) {
 		if (options.width !== undefined || options.height !== undefined) {
@@ -75,7 +72,6 @@ function resolvePlaceholderDimensions(options: PlaceholderOptions): {
 		return {
 			width: options.size,
 			height: options.size,
-			path: String(options.size),
 		};
 	}
 
@@ -93,7 +89,6 @@ function resolvePlaceholderDimensions(options: PlaceholderOptions): {
 	return {
 		width: options.width,
 		height: options.height,
-		path: `${options.width}x${options.height}`,
 	};
 }
 
@@ -102,11 +97,15 @@ function validatePlaceholderAppearance(options: PlaceholderAppearance): void {
 		options.background !== undefined &&
 		!COLOR_PATTERN.test(options.background)
 	) {
-		throw new TypeError("Placeholder background must use #rrggbb syntax.");
+		throw new TypeError(
+			"Placeholder background must use #rrggbb or #rrggbbaa syntax.",
+		);
 	}
 
 	if (options.color !== undefined && !COLOR_PATTERN.test(options.color)) {
-		throw new TypeError("Placeholder color must use #rrggbb syntax.");
+		throw new TypeError(
+			"Placeholder color must use #rrggbb or #rrggbbaa syntax.",
+		);
 	}
 
 	if (options.text !== undefined && [...options.text].length > 64) {
@@ -114,9 +113,22 @@ function validatePlaceholderAppearance(options: PlaceholderAppearance): void {
 	}
 }
 
-function buildPlaceholderQuery(options: PlaceholderAppearance): string {
+function buildPlaceholderQuery(
+	options: PlaceholderOptions,
+	dimensions: { width: number; height: number },
+	includeDensity: boolean,
+): string {
 	const query = new URLSearchParams();
 
+	if (options.size !== undefined) {
+		query.set("size", String(options.size));
+	} else {
+		query.set("width", String(dimensions.width));
+		query.set("height", String(dimensions.height));
+	}
+	if (includeDensity && options.density !== undefined) {
+		query.set("density", String(options.density));
+	}
 	if (options.background !== undefined) {
 		query.set("background", options.background);
 	}
@@ -127,6 +139,5 @@ function buildPlaceholderQuery(options: PlaceholderAppearance): string {
 		query.set("text", options.text);
 	}
 
-	const value = query.toString();
-	return value ? `?${value}` : "";
+	return `?${query}`;
 }

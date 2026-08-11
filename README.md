@@ -1,4 +1,4 @@
-# <img src="https://pictum.dev/api/v1/icons/skill-icons/javascript.svg" width="24" /> Pictum for JavaScript
+# <img src="https://pictum.dev/v1/icons/skill-icons:javascript.svg" width="24" /> Pictum for JavaScript
 
 [![npm version](https://npmx.dev/api/registry/badge/version/pictum?color=bfdbfe&labelColor=404040)](https://npmx.dev/package/pictum)
 [![monthly downloads](https://npmx.dev/api/registry/badge/downloads/pictum?color=fed7aa&labelColor=404040)](https://npmx.dev/package/pictum)

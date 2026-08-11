@@ -7,5 +7,5 @@ export type {
 	AvatarVariant,
 	GeneratedAvatarOptions,
 	GeneratedAvatarVariant,
-	RealisticAvatarOptions,
+	PortraitAvatarOptions,
 } from "./types";

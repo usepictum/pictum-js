@@ -1,6 +1,6 @@
 import type { PictumAsset } from "./types";
 
-export const DEFAULT_BASE_URL = "https://pictum.dev/api/v1/";
+export const DEFAULT_BASE_URL = "https://pictum.dev/v1/";
 
 export function normalizeBaseUrl(baseUrl = DEFAULT_BASE_URL): string {
 	let parsed: URL;

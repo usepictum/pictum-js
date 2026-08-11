@@ -22,5 +22,5 @@ export function icon(name: string, options: IconOptions = {}): PictumAsset {
 	}
 
 	const baseUrl = normalizeBaseUrl(options.baseUrl);
-	return createAsset(`${baseUrl}/icons/${prefix}/${iconName}.svg`);
+	return createAsset(`${baseUrl}/icons/${prefix}:${iconName}.svg`);
 }
