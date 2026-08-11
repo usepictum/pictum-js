@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.3 - 2026-08-11
+
+
+### Features
+
+* align asset helpers with v1 API by [@nhedger](https://github.com/nhedger) ([d1ca216](https://github.com/usepictum/pictum-js/commit/d1ca21657bc829b7085562689e3c8c22044237a8))
+
+
+
+### Contributors
+* [@nhedger](https://github.com/nhedger)
+
+**Comparison**: https://github.com/usepictum/pictum-js/compare/v0.1.2...v0.1.3
+
 ## v0.1.2 - 2026-08-10
 
 
